@@ -329,49 +329,17 @@ void FileDirectory::printDirectory(char filename[])
 }; //printDirectory
 
 
-void FileDirectory::printData(char filename[])
+void FileDirectory::printData(char filename[], int numberBytes)
 {
-	/*prints the data of a file.
-			(3)	use cluster address to read the data of the file.Use the file length to print these data in hexadecimal format.*/
+	
+	unsigned int numClusters = (numberBytes + 4) / 4;
 
 	cout << "data for " << filename << endl;
-	int i, j, k;
-	unsigned short int firstClusterAddress, ClusterAddress;
-	unsigned short int ClusterLocations[256];
-	unsigned char dataout[1024];
-	//(1)	use the file name to get the file information from the File Directory; including the first cluster address;
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < numClusters; i++)
 	{
-		for (j = 0; j < 8; j++)
-		{
-			if (fileDirectory[i][j] != filename[j])
-				break;
-		}//end for
-		//(2)use the first cluster address to get all cluster addresses from the FAT - 16;
-		if (j == 8)
-		{
-			firstClusterAddress = (fileDirectory[i][27] << 8) + (fileDirectory[i][26]);
-			
-			ClusterAddress = firstClusterAddress;
-			k = 0;
-			while (ClusterAddress != 0xfff8)
-			{
-				ClusterLocations[k] = ClusterAddress;
-				ClusterAddress = FAT16[ClusterAddress];
-				k++;
-			}//end while
-
-			for (int p = 0; p < k; p++)
-			{
-				for (int n = 0; n < 4; n++)
-				{
-					dataout[p*4 + n] = data[ClusterLocations[p] * 4 + n];
-					cout << dataout[p * 4 + n];
-				}
-			}
-		
-		}
-
+		cout << char(data[i]);
 	}
+	cout << endl;
 
+	
 };//printData
