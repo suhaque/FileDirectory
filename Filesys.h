@@ -33,7 +33,7 @@ public:
 	/*prints all the  files of the directory.
 	(1)	use the file name to get the file information from the File Directory; including the first cluster address;
 	(2)	use the first cluster address to get all cluster addresses from the FAT - 16;*/
-	void printData(char filename[]);
+	void printData(char filename[],int numberBytes);
 	/*prints the data of a file.
 	(1)	use the file name to get the file information from the File Directory; including the first cluster address;
 	(2)	use the first cluster address to get all cluster addresses from the FAT - 16;
